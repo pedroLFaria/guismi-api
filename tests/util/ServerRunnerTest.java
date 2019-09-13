@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 public class ServerRunnerTest {
 
     @Test
-    //@Ignore
+    @Ignore
     public void startServer() throws InterruptedException {
         Thread.sleep( Integer.MAX_VALUE );
     }
