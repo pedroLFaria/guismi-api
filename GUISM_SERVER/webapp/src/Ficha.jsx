@@ -98,9 +98,10 @@ class Raca extends React.Component {
 
 class Ficha extends React.Component {
     constructor(props) {
+        console.log("constructor");
         super(props);
         this.state = {
-            ficha: JSON.parse(sessionStorage.getItem("ficha")),
+            ficha: {habitos:{},}
             sistema: JSON.parse(sessionStorage.getItem("sistema"))
         }
     };
@@ -119,11 +120,18 @@ class Ficha extends React.Component {
             })
     }
 
+    componentDidUpdate(prevProps){
+        console.log("prevProps: " + prevProps);
+        console.log("this props: "+ this.props)
+        if(prevProps.ficha.idFicha !== this.props.ficha.idFicha)
+            this.setState({ficha:this.props.ficha})
+    }
+
     render() {
-        const ficha = this.state.ficha
-        const sistema = this.state.sistema
-        const habitosConst = this.state.ficha.habitos
-        const caminhosConst = this.state.ficha.caminhos
+        const ficha = this.state.ficha;
+        const sistema = this.state.sistema;
+        const habitosConst = this.state.ficha.habitos;
+        const caminhosConst = this.state.ficha.caminhos;
         return (
             <fieldset className="scheduler-border form-group row">
                 <legend className="scheduler-border">Personagem</legend>
@@ -157,11 +165,8 @@ class Ficha extends React.Component {
         )
     }
 }
-
-fetch("api/ficha/id/" + new URL(window.location.href).searchParams.get("idFicha"), {method: "GET", Header: new Headers})
-    .then(status)
-    .then(response => response.json())
-    .then(data => {
-        sessionStorage.setItem("ficha", JSON.stringify(data))
-    })
-    .then(ReactDOM.render(<Ficha/>, document.getElementById('telaPersonagem')))
+ReactDOM.render(
+    <Ficha
+        ficha = {JSON.parse(sessionStorage.getItem("ficha"))}
+    />,
+    document.getElementById('telaPersonagem'));
