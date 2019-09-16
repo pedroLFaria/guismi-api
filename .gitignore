@@ -1,5 +1,5 @@
-/GUISM_SERVER/output
-/GUISM_SERVER/*.log
-/GUISM_SERVER/.idea
-/GUISM_SERVER/GUISM_SERVER.iml
-/GUISM_SERVER/server.log.log
+/output
+/*.log
+/.idea
+/guismi-api.iml
+/server.log.log
