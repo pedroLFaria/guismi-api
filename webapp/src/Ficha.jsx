@@ -101,7 +101,7 @@ class Ficha extends React.Component {
         console.log("constructor");
         super(props);
         this.state = {
-            ficha: {habitos:{},}
+            ficha: {caminhos: [], descendencias: [], habilidades: [], habitos: [], idiomas: [], inventarios: [], patronos: [], raca: {}, situacoes: []},
             sistema: JSON.parse(sessionStorage.getItem("sistema"))
         }
     };

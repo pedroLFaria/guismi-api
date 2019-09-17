@@ -8,7 +8,7 @@
 		<artifactId>kikaha-project</artifactId>
 	</parent>
 
-	<artifactId>GUISM_SERVER</artifactId>
+	<artifactId>guismi-api</artifactId>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	<groupId>2.0</groupId>
