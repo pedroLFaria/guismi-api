@@ -125,6 +125,7 @@ class Nome extends React.Component{
         this.state.ficha.nomePersonagem = event.target.value;
         this.setState({ficha:this.state.ficha});
         this.render();
+        this.putFicha();
     }
 
     putFicha(){
@@ -161,7 +162,7 @@ class Ficha extends React.Component {
     };
 
     componentDidMount() {
-      //  this.timerID = setInterval(() => this.tick(), 3000);
+        this.timerID = setInterval(() => this.tick(), 3000);
     };
 
     tick() {
