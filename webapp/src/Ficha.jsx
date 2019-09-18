@@ -35,21 +35,22 @@ class Caminho extends React.Component {
 
     handleChange(event) {
         if (this.state.ficha.caminhos.every(caminho => caminho.idCaminho !== Number(event.target.value))) {
-
-        this.state.ficha.caminhos[event.target.id].idCaminho = Number(event.target.value);
-        this.setState({ficha: this.state.ficha});
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener('load', () => {
-            console.log("uploaded")
-        });
-        xhr.open('PUT', 'api/ficha/');
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(JSON.stringify(this.state.ficha));
+            this.state.ficha.caminhos[event.target.id].idCaminho = Number(event.target.value);
+            this.setState({ficha: this.state.ficha});
+            this.render()
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                console.log("uploaded")
+            });
+            xhr.open('PUT', 'api/ficha/');
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify(this.state.ficha));
         }else
             alert("Você já tem este caminho")
     }
 
     componentDidUpdate(prevProps) {
+        console.log("caminho did update: " + JSON.stringify(prevProps.ficha.caminhos))
         if(prevProps.ficha.caminhos.length !== this.props.ficha.caminhos.length){
             this.setState({ficha:this.props.ficha})
         }
@@ -160,7 +161,7 @@ class Ficha extends React.Component {
     };
 
     componentDidMount() {
-        this.timerID = setInterval(() => this.tick(), 3000);
+      //  this.timerID = setInterval(() => this.tick(), 3000);
     };
 
     tick() {
