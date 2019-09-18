@@ -13,9 +13,15 @@ server:
 
   smart-routes:
     auth:
-      login-form-enabled: false
+      login-form-enabled: true
       logout-url-enabled: true
       logout-http-method: "POST"
+    cors:
+      enabled: true
+      always-allow-origin: false
+      always-allow-credentials: false
+      allowed-methods: [ "*" ]
+      allowed-hosts: ["localhost"]
 
   db:
     datasources:
@@ -33,18 +39,23 @@ server:
 
     endpoints:
       permission-denied-page: "/forbidden.html"
-      callback-url: "/api/auth/callback"
-      logout-url: "/api/auth/logout"
+      callback-url: "/auth/callback"
+      logout-url: "/auth/logout"
       login-page: "/index.html"
 
     db-auth:
       select-user-password: "select senha as password  from jogador where login = ?"
       select-user-roles: "select role from jogador where login = ?"
 
+    auth-mechanisms:
+      basic: kikaha.core.modules.security.BasicAuthenticationMechanism
+      form: kikaha.core.modules.security.FormAuthenticationMechanism
+
     rules:
-      - { pattern: "/api/*", auth-mechanisms: [ "json" ], identity-managers: [ "db-auth" ] }
-      - { pattern: "/*", auth-mechanisms: [ "form" ], identity-managers: [ "db-auth" ] }
+        - { pattern: "/api/*", auth-mechanisms: [ "basic" ], identity-managers: [ "db-auth" ] }
+        - { pattern: "/*", auth-mechanisms: [ "form" ], identity-managers: [ "db-auth" ] }
     default-excluded-patterns: [ "/assets/*" ]
+
   http:
     enabled: true
     host: "0.0.0.0"
