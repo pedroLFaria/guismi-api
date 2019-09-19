@@ -31,20 +31,6 @@ server:
   auth:
     session-store: kikaha.core.modules.security.InMemorySessionStore
 
-    endpoints:
-      permission-denied-page: "/forbidden.html"
-      callback-url: "/api/auth/callback"
-      logout-url: "/api/auth/logout"
-      login-page: "/index.html"
-
-    db-auth:
-      select-user-password: "select senha as password  from jogador where login = ?"
-      select-user-roles: "select role from jogador where login = ?"
-
-    rules:
-      - { pattern: "/api/*", auth-mechanisms: [ "json" ], identity-managers: [ "db-auth" ] }
-      - { pattern: "/*", auth-mechanisms: [ "form" ], identity-managers: [ "db-auth" ] }
-    default-excluded-patterns: [ "/assets/*" ]
   http:
     enabled: true
     host: "0.0.0.0"

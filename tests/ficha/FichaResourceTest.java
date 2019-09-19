@@ -13,6 +13,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @RunWith(KikahaRunner.class)
+@Ignore
 public class FichaResourceTest {
 
     @Inject FichaQueries fichaQueries;
@@ -34,7 +35,7 @@ public class FichaResourceTest {
     }
 
     @Test
-    //@Ignore
+    @Ignore
     public void insertFicha(){
         val ficha = fichaQueries.findById(1L);
         ficha.setNomePersonagem("Novo jojo");
