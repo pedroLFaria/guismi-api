@@ -36,7 +36,7 @@ server:
       permission-denied-page: "/forbidden.html"
       callback-url: "/api/auth/callback"
       logout-url: "/api/auth/logout"
-      login-page: "/index.html"
+      login-page: "/"
 
     db-auth:
       select-user-password: "select senha as password  from jogador where login = ?"
