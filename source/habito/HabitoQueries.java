@@ -16,7 +16,7 @@ public interface HabitoQueries {
     @SqlQuery("select * from habito")
     Set<Habito> findByObject();
 
-    @SqlQuery("select habito.*,qtddescendenciahabito from descendencia " +
+    @SqlQuery("select habito.*,descendencia_has_habito.qtddescendenciahabito from descendencia " +
             "right join descendencia_has_habito on descendencia_has_habito.iddescendencia = descendencia.iddescendencia " +
             "right join habito on habito.idhabito = descendencia_has_habito.idhabito where descendencia.iddescendencia = :idDescendencia")
     Set<Habito> findByObject(@BindBean Descendencia descendencia);
