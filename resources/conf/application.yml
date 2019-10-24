@@ -43,8 +43,8 @@ server:
       select-user-roles: "select role from jogador where login = ?"
 
     rules:
-      - { pattern: "/api/*", auth-mechanisms: [ "json" ], identity-managers: [ "db-auth" ] }
-      - { pattern: "/*", auth-mechanisms: [ "form" ], identity-managers: [ "db-auth" ] }
+      - { pattern: "/api/*", auth-mechanisms: [ "basic", "json" ], identity-managers: [ "db-auth" ] }
+      - { pattern: "/*", auth-mechanisms: [ "basic", "form" ], identity-managers: [ "db-auth" ] }
     default-excluded-patterns: [ "/static/*"]
   http:
     enabled: true
