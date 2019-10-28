@@ -2,6 +2,7 @@ package ficha;
 
 import caminho.Caminho;
 import descendencia.Descendencia;
+import especializacao.Especializacao;
 import habilidade.Habilidade;
 import habito.Habito;
 import idioma.Idioma;
@@ -128,5 +129,7 @@ public class Ficha {
     Set<Patrono> patronos;
 
     Set<Situacao> situacoes;
+
+    Set<Especializacao> especializacoes;
 }
 

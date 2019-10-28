@@ -5,6 +5,7 @@ import caminho.Caminho;
 import caminho.CaminhoResource;
 import descendencia.Descendencia;
 import descendencia.DescendenciaResource;
+import especializacao.EspecializacaoResource;
 import habilidade.Habilidade;
 import habilidade.HabilidadeResource;
 import habito.Habito;
@@ -60,6 +61,9 @@ public class FichaResource {
     @Inject
     SituacaoResource situacaoResource;
 
+    @Inject
+    EspecializacaoResource especializacaoResource;
+
     @GET
     @Path("id/{id}")
     public Response findById(@PathParam("id") Long id){
@@ -90,6 +94,7 @@ public class FichaResource {
         ficha.setDescendencias(descendenciaResource.findByObject(ficha));
         ficha.setHabitos(habitoResource.findByObject(ficha));
         ficha.setInventarios(inventarioResource.findByObject(ficha));
+        ficha.setEspecializacoes(especializacaoResource.findByObject(ficha));
         return ficha;
     }
 

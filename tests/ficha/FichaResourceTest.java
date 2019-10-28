@@ -13,7 +13,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @RunWith(KikahaRunner.class)
-@Ignore
 public class FichaResourceTest {
 
     @Inject FichaQueries fichaQueries;
@@ -25,6 +24,7 @@ public class FichaResourceTest {
         val entityFicha = (Ficha) getResponse.entity();
         assert entityFicha != null;
         assert entityFicha.idJogador ==1L;
+        System.out.println(entityFicha);
     }
 
     @Test
