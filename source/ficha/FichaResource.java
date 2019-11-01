@@ -76,8 +76,8 @@ public class FichaResource {
 
     @GET
     @Path("jogador")
-    public Response findByIdJogador(/*@Context Session session*/){
-        val ficha = queries.findByIdJogador(1L);
+    public Response findByIdJogador(@Context Session session){
+        val ficha = queries.findByIdJogador(session.getId());
         if(ficha == null){
             return DefaultResponse.notFound().entity(ficha);
         }
