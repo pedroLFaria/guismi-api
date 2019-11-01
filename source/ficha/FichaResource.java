@@ -78,7 +78,7 @@ public class FichaResource {
         return DefaultResponse.ok(preenche(ficha));
     }
 
-    @POST
+    @GET
     @Path("async/id/{id}")
     void findById(@PathParam("id") Long id, AsyncResponse asyncResponse) {
         asyncResponseSet.put(asyncResponse, id);
