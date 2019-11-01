@@ -1,23 +1,22 @@
-package chat;
+package websockets;
 
 import io.undertow.websockets.core.CloseMessage;
 import kikaha.core.modules.websocket.WebSocketSession;
-import kikaha.urouting.api.OnClose;
-import kikaha.urouting.api.OnMessage;
-import kikaha.urouting.api.OnOpen;
-import kikaha.urouting.api.WebSocket;
+import kikaha.urouting.api.*;
 
 import javax.inject.Singleton;
 
 @Singleton
+@Consumes(Mimes.JSON)
 @WebSocket( "chat/{room-id}" )
 public class ChatRoomResource {
 
     @OnMessage
-    public void onMessage(WebSocketSession session, String message ) {
+    public void onMessage(WebSocketSession session, ChatMessage message ) {
+        System.out.println(message);
         session.broadcast(
-            createMessage(session).setAction( ChatMessage.Action.SEND )
-                .setMessage( message )
+            createMessage(session).setAction( ChatMessage.Action.FICHA )
+                .setMessage( message.getMessage() )
         );
     }
 

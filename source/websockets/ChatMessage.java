@@ -1,4 +1,4 @@
-package chat;
+package websockets;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -12,6 +12,6 @@ public class ChatMessage {
     String message;
 
     public enum Action {
-        SEND, JOINED, LEFT
+        DICE, JOINED, LEFT, FICHA
     }
 }
