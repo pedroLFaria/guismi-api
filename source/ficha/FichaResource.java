@@ -24,6 +24,8 @@ import situacao.SituacaoResource;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("api/ficha/")
 @Singleton
@@ -64,27 +66,35 @@ public class FichaResource {
     @Inject
     EspecializacaoResource especializacaoResource;
 
+    Map<AsyncResponse, Long> asyncResponseSet = new HashMap<AsyncResponse, Long>();
+
     @GET
     @Path("id/{id}")
-    public Response findById(@PathParam("id") Long id){
+    public Response findById(@PathParam("id") Long id) {
         Ficha ficha = queries.findById(id);
-        if(ficha == null){
+        if (ficha == null) {
             return DefaultResponse.notFound().entity("Ficha não encontrada!");
         }
         return DefaultResponse.ok(preenche(ficha));
     }
 
+    @POST
+    @Path("async/id/{id}")
+    void findById(@PathParam("id") Long id, AsyncResponse asyncResponse) {
+        asyncResponseSet.put(asyncResponse, id);
+    }
+
     @GET
     @Path("jogador")
-    public Response findByIdJogador(@Context Session session){
+    public Response findByIdJogador(@Context Session session) {
         val ficha = queries.findByIdJogador(session.getId());
-        if(ficha == null){
+        if (ficha == null) {
             return DefaultResponse.notFound().entity(ficha);
         }
         return DefaultResponse.ok((ficha));
     }
 
-    private Ficha preenche(Ficha ficha){
+    private Ficha preenche(Ficha ficha) {
         ficha.setRaca(racaResource.findByObject(ficha));
         ficha.setHabilidades(habilidadeResource.findByObject(ficha));
         ficha.setCaminhos(caminhoResource.findByObject(ficha));
@@ -103,41 +113,48 @@ public class FichaResource {
         queries.update(ficha);
         queries.cleanFichaJunctionTables(ficha);
         insertFichaJunctionTables(ficha);
+        new Thread(() -> RespondAsyncResponse(ficha)).start();
         return DefaultResponse.accepted();
     }
 
+    private void RespondAsyncResponse(Ficha ficha){
+        asyncResponseSet.forEach((asyncResponse, aLong) -> {
+            if (aLong.equals(ficha.idFicha))
+                asyncResponse.write(DefaultResponse.ok(ficha));
+        });
+    }
     @POST
-    public Response insert(Ficha ficha){
+    public Response insert(Ficha ficha) {
         Long id = queries.insert(ficha);
         ficha.setIdFicha(id);
         insertFichaJunctionTables(ficha);
         return DefaultResponse.created();
     }
 
-    private void insertFichaJunctionTables(Ficha ficha){
-        if(ficha.getHabitos() != null)
-            for(Habito habito : ficha.getHabitos())
-                queries.insertFichaHasHabito(ficha,habito);
-        if(ficha.getHabilidades() != null)
-            for(Habilidade habilidade : ficha.getHabilidades())
-                queries.insertFichaHasHabilidade(ficha,habilidade);
-        if(ficha.getCaminhos() != null)
-            for(Caminho caminho : ficha.getCaminhos())
-                queries.insertFichaHasCaminho(ficha,caminho);
-        if(ficha.getDescendencias() != null)
-            for(Descendencia descendencia : ficha.getDescendencias())
-                queries.insertFichaHasDescendencia(ficha,descendencia);
-        if(ficha.getIdiomas() != null)
-            for(Idioma idioma : ficha.getIdiomas())
-                queries.insertFichaHasIdidoma(ficha,idioma);
-        if(ficha.getInventarios() != null)
-            for(Inventario inventario : ficha.getInventarios())
-                queries.insertFichaHasInventario(ficha,inventario);
-        if(ficha.getPatronos() != null)
-            for(Patrono patrono : ficha.getPatronos())
-                queries.insertFichaHasPatrono(ficha,patrono);
-        if(ficha.getSituacoes() != null)
-            for(Situacao situacao : ficha.getSituacoes())
-                queries.insertFichaHasSituacao(ficha,situacao);
+    private void insertFichaJunctionTables(Ficha ficha) {
+        if (ficha.getHabitos() != null)
+            for (Habito habito : ficha.getHabitos())
+                queries.insertFichaHasHabito(ficha, habito);
+        if (ficha.getHabilidades() != null)
+            for (Habilidade habilidade : ficha.getHabilidades())
+                queries.insertFichaHasHabilidade(ficha, habilidade);
+        if (ficha.getCaminhos() != null)
+            for (Caminho caminho : ficha.getCaminhos())
+                queries.insertFichaHasCaminho(ficha, caminho);
+        if (ficha.getDescendencias() != null)
+            for (Descendencia descendencia : ficha.getDescendencias())
+                queries.insertFichaHasDescendencia(ficha, descendencia);
+        if (ficha.getIdiomas() != null)
+            for (Idioma idioma : ficha.getIdiomas())
+                queries.insertFichaHasIdidoma(ficha, idioma);
+        if (ficha.getInventarios() != null)
+            for (Inventario inventario : ficha.getInventarios())
+                queries.insertFichaHasInventario(ficha, inventario);
+        if (ficha.getPatronos() != null)
+            for (Patrono patrono : ficha.getPatronos())
+                queries.insertFichaHasPatrono(ficha, patrono);
+        if (ficha.getSituacoes() != null)
+            for (Situacao situacao : ficha.getSituacoes())
+                queries.insertFichaHasSituacao(ficha, situacao);
     }
 }
