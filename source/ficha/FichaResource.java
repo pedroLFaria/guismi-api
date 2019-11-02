@@ -119,8 +119,10 @@ public class FichaResource {
 
     private void RespondAsyncResponse(Ficha ficha){
         asyncResponseSet.forEach((asyncResponse, aLong) -> {
-            if (aLong.equals(ficha.idFicha))
+            if (aLong.equals(ficha.idFicha)) {
                 asyncResponse.write(DefaultResponse.ok(ficha));
+                asyncResponseSet.remove(asyncResponse);
+            }
         });
     }
     @POST
