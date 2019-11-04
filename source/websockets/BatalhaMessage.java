@@ -5,13 +5,13 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors( chain = true )
-public class ChatMessage {
+public class BatalhaMessage {
 
     String user;
-    Action action;
+    Type type;
     String message;
 
-    public enum Action {
-        DICE, JOINED, LEFT, FICHA
+    public enum Type {
+        DICE, MESSAGE, FICHA
     }
 }
