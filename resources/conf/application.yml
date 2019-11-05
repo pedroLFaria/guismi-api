@@ -1,5 +1,9 @@
 server:
 
+  aws:
+    default:
+      region: "sa-east-1"
+
   static: { enabled: true, webjar-enabled: true }
 
   Access-Control-Allow-Credentials: true
