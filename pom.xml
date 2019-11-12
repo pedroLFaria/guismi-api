@@ -21,6 +21,9 @@
 		<config.plugins.aws.s3.enabled>true</config.plugins.aws.s3.enabled>
 		<config.plugins.aws.s3.region>sa-east-1</config.plugins.aws.s3.region>
 		<config.plugins.aws.s3.bucket>guismi-api-codebuild-input-bucket</config.plugins.aws.s3.bucket>
+		<config.plugins.aws.s3.useCodeDeploy>true</config.plugins.aws.s3.useCodeDeploy>
+		<config.plugins.aws.s3.codeDeployApplicationName>GUISMI</config.plugins.aws.s3.codeDeployApplicationName>
+		<config.plugins.aws.s3.codeDeployDeploymentGroupName>GUISMI-APP</config.plugins.aws.s3.codeDeployDeploymentGroupName>
 		<config.plugins.jar.enabled>true</config.plugins.jar.enabled>
 	</properties>
 
