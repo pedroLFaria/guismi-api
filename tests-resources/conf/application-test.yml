@@ -20,7 +20,7 @@ server:
   db:
     datasources:
       default:
-        jdbc-url: "jdbc:mysql://guismi.ctebgduzcfr5.sa-east-1.rds.amazonaws.com/guism?serverTimezone=UTC"
+        jdbc-url: "jdbc:mysql://guismi-public.ctebgduzcfr5.sa-east-1.rds.amazonaws.com/guism?serverTimezone=UTC"
         username: "guismiADM"
         password: "karen#GOD"
         useSSL: "true"
