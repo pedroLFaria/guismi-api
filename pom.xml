@@ -25,6 +25,7 @@
 		<config.plugins.aws.s3.codeDeployApplicationName>GUISMI</config.plugins.aws.s3.codeDeployApplicationName>
 		<config.plugins.aws.s3.codeDeployDeploymentGroupName>GUISMI-APP</config.plugins.aws.s3.codeDeployDeploymentGroupName>
 		<config.plugins.jar.enabled>true</config.plugins.jar.enabled>
+		<config.dir.web>../webapp</config.dir.web>
 	</properties>
 
 	<build>
