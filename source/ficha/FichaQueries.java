@@ -66,14 +66,14 @@ public interface FichaQueries {
     @SqlUpdate("insert into ficha_has_situacao(idficha,idsituacao) values(:idFicha, :idSituacao)")
     Boolean insertFichaHasSituacao(@BindBean Ficha ficha, @BindBean Situacao situacao);
 
-    default void cleanFichaJunctionTables(Ficha ficha){
-        deleteFichaHasCaminho(ficha);
-        deleteFichaHasDescendencia(ficha);
-        deleteFichaHasHabilidade(ficha);
-        deleteFichaHasHabito(ficha);
-        deleteFichaHasIdidoma(ficha);
-        deleteFichaHasInventario(ficha);
-        deleteFichaHasPatrono(ficha);
+    default Boolean cleanFichaJunctionTables(Ficha ficha){
+        return deleteFichaHasCaminho(ficha) &&
+        deleteFichaHasDescendencia(ficha) &&
+        deleteFichaHasHabilidade(ficha) &&
+        deleteFichaHasHabito(ficha) &&
+        deleteFichaHasIdidoma(ficha) &&
+        deleteFichaHasInventario(ficha) &&
+        deleteFichaHasPatrono(ficha) &&
         deleteFichaHasSituacao(ficha);
     }
 
@@ -101,4 +101,6 @@ public interface FichaQueries {
     @SqlUpdate("delete from  ficha_has_situacao where idficha = :idFicha")
     Boolean deleteFichaHasSituacao(@BindBean Ficha ficha);
 
+    @SqlUpdate("delete from ficha where idficha = :idFicha")
+    Boolean deleteFicha(@BindBean Ficha ficha);
 }

@@ -13,6 +13,7 @@ import kikaha.jdbi.serializers.Optional;
 import lombok.Data;
 import patrono.Patrono;
 import raca.Raca;
+import sanidade.Sanidade;
 import situacao.Situacao;
 
 import java.util.Set;
@@ -113,6 +114,8 @@ public class Ficha {
     Long idSanidade;
 
     Raca raca;
+
+    Sanidade sanidade;
 
     Set<Caminho> caminhos;
 

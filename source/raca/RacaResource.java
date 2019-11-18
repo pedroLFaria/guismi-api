@@ -56,6 +56,7 @@ public class RacaResource {
             preenche(raca);
         return racas;
     }
+
     private Raca preenche(Raca raca){
         raca.setDescendencias(descendenciaResource.findByObject(raca));
         raca.setEspecializacoes(especializacaoResource.findByObject(raca));

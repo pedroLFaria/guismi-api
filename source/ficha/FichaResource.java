@@ -19,6 +19,7 @@ import lombok.val;
 import patrono.Patrono;
 import patrono.PatronoResource;
 import raca.RacaResource;
+import sanidade.SanidadeResource;
 import situacao.Situacao;
 import situacao.SituacaoResource;
 
@@ -66,6 +67,9 @@ public class FichaResource {
     @Inject
     EspecializacaoResource especializacaoResource;
 
+    @Inject
+    SanidadeResource sanidadeResource;
+
     Map<AsyncResponse, Long> asyncResponseSet = new HashMap<AsyncResponse, Long>();
 
     @GET
@@ -105,6 +109,7 @@ public class FichaResource {
         ficha.setHabitos(habitoResource.findByObject(ficha));
         ficha.setInventarios(inventarioResource.findByObject(ficha));
         ficha.setEspecializacoes(especializacaoResource.findByObject(ficha));
+        ficha.setSanidade(sanidadeResource.findByObject(ficha));
         return ficha;
     }
 
@@ -125,12 +130,23 @@ public class FichaResource {
             }
         });
     }
+
     @POST
     public Response insert(Ficha ficha) {
         Long id = queries.insert(ficha);
         ficha.setIdFicha(id);
         insertFichaJunctionTables(ficha);
         return DefaultResponse.created();
+    }
+
+    @DELETE
+    public Response delete(Ficha ficha){
+        if(queries.deleteFicha(ficha) &&
+        queries.cleanFichaJunctionTables(ficha))
+            return DefaultResponse.accepted();
+        else {
+            return DefaultResponse.serverError();
+        }
     }
 
     private void insertFichaJunctionTables(Ficha ficha) {
