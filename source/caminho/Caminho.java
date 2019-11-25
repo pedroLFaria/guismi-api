@@ -5,6 +5,7 @@ import habilidade.Habilidade;
 import habito.Habito;
 import kikaha.jdbi.serializers.Column;
 import kikaha.jdbi.serializers.Entity;
+import kikaha.jdbi.serializers.Optional;
 import lombok.Data;
 
 import java.util.Set;
@@ -21,6 +22,10 @@ public class Caminho {
 
     @Column
     String descCaminho;
+
+    @Column
+    @Optional
+    Long nivelCaminho;
 
    Set<Habilidade> habilidades;
 

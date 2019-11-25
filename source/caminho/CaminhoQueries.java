@@ -10,9 +10,9 @@ import java.util.Set;
 @JDBI
 public interface CaminhoQueries {
 
-    @SqlQuery("select caminho.* from ficha " +
-            "right join ficha_has_caminho on ficha.idficha = ficha_has_caminho.idficha " +
-            "right join caminho on ficha_has_caminho.idcaminho = caminho.idcaminho " +
+    @SqlQuery("select caminho.*, ficha_has_caminho.NIVELCAMINHO from ficha " +
+            "right join ficha_has_caminho on ficha_has_caminho.IDFICHA = ficha.IDFICHA " +
+            "right join caminho on caminho.IDCAMINHO = ficha_has_caminho.IDCAMINHO " +
             "where ficha.idficha = :idFicha")
     Set<Caminho> findByObject(@BindBean Ficha ficha);
 

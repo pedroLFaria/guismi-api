@@ -42,7 +42,7 @@ public interface FichaQueries {
             "histpersonagem = :histPersonagem, nota = :nota, idsanidade = :idSanidade  where idficha = :idFicha")
     Boolean update(@BindBean Ficha ficha);
 
-    @SqlUpdate("insert into ficha_has_caminho(idficha,idcaminho) values(:idFicha,:idCaminho)")
+    @SqlUpdate("insert into ficha_has_caminho(idficha, idcaminho, nivelcaminho) values(:idFicha,:idCaminho, :nivelCaminho)")
     Boolean insertFichaHasCaminho(@BindBean Ficha ficha, @BindBean Caminho caminho);
 
     @SqlUpdate("insert into ficha_has_descendencia(idficha,iddescendencia) values(:idFicha,:idDescendencia)")
@@ -52,7 +52,7 @@ public interface FichaQueries {
     Boolean insertFichaHasHabilidade(@BindBean Ficha ficha, @BindBean Habilidade habilidade);
 
     @SqlUpdate("insert into ficha_has_habito(idficha,idhabito,qtdfichahabito) values(:idFicha,:idHabito,:qtdFichaHabito)")
-    Boolean insertFichaHasHabito(@BindBean Ficha ficha, @ BindBean Habito habito);
+    Boolean insertFichaHasHabito(@BindBean Ficha ficha, @BindBean Habito habito);
 
     @SqlUpdate("insert into ficha_has_idioma(idficha,ididioma) values(:idFicha,:idIdioma)")
     Boolean insertFichaHasIdidoma(@BindBean Ficha ficha, @BindBean Idioma idioma);
@@ -66,15 +66,16 @@ public interface FichaQueries {
     @SqlUpdate("insert into ficha_has_situacao(idficha,idsituacao) values(:idFicha, :idSituacao)")
     Boolean insertFichaHasSituacao(@BindBean Ficha ficha, @BindBean Situacao situacao);
 
-    default Boolean cleanFichaJunctionTables(Ficha ficha){
-        return deleteFichaHasCaminho(ficha) &&
-        deleteFichaHasDescendencia(ficha) &&
-        deleteFichaHasHabilidade(ficha) &&
-        deleteFichaHasHabito(ficha) &&
-        deleteFichaHasIdidoma(ficha) &&
-        deleteFichaHasInventario(ficha) &&
-        deleteFichaHasPatrono(ficha) &&
+    default Boolean cleanFichaJunctionTables(Ficha ficha) {
+        deleteFichaHasCaminho(ficha);
+        deleteFichaHasDescendencia(ficha);
+        deleteFichaHasHabilidade(ficha);
+        deleteFichaHasHabito(ficha);
+        deleteFichaHasIdidoma(ficha);
+        deleteFichaHasInventario(ficha);
+        deleteFichaHasPatrono(ficha);
         deleteFichaHasSituacao(ficha);
+        return true;
     }
 
     @SqlUpdate("delete from ficha_has_caminho where idficha = :idFicha")
