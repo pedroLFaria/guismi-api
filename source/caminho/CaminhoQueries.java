@@ -1,9 +1,13 @@
 package caminho;
 
+import especializacao.Especializacao;
 import ficha.Ficha;
+import habilidade.Habilidade;
+import habito.Habito;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.Set;
 
@@ -18,4 +22,29 @@ public interface CaminhoQueries {
 
     @SqlQuery("select * from caminho")
     Set<Caminho> findByObject();
+
+    @SqlUpdate("insert into caminho_has_especializacao(IDESPECIALIZACAO, IDCAMINHO) values (:idEspecializacao, :idCaminho)")
+    Boolean insertHasEspecializacao(@BindBean Caminho caminho, @BindBean Especializacao especializacao);
+
+    @SqlUpdate("insert into caminho_has_habilidade(IDHABILIDADE, IDCAMINHO) values (:idHabilidade, :idCaminho)")
+    Boolean insertHasHabilidade(@BindBean Caminho caminho, @BindBean Habilidade habilidade);
+
+    @SqlUpdate("insert into caminho_has_habito(IDHABITO, IDCAMINHO, QTDCAMINHOHABITO) values (:idHabito, :idCaminho)")
+    Boolean insertHasHabito(@BindBean Caminho caminho, @BindBean Habito habito);
+
+    default boolean cleanJunctionTables(Caminho caminho){
+        deleteHasEspecializacao(caminho);
+        deleteHasHabilidade(caminho);
+        deleteHashabito(caminho);
+        return true;
+    }
+
+    @SqlUpdate("delete from caminho_has_especializacao where IDCAMINHO = :idCaminho")
+    Boolean deleteHasEspecializacao(@BindBean Caminho caminho);
+
+    @SqlUpdate("delete from caminho_has_habilidade where IDCAMINHO = :idCaminho")
+    Boolean deleteHasHabilidade(@BindBean Caminho caminho);
+
+    @SqlUpdate("delete from caminho_has_habito where IDCAMINHO = :idCaminho")
+    Boolean deleteHashabito(@BindBean Caminho caminho);
 }

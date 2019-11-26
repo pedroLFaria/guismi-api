@@ -1,5 +1,6 @@
 package acao;
 
+import auth.Session;
 import habilidade.Habilidade;
 import kikaha.urouting.api.*;
 
@@ -23,7 +24,29 @@ public class AcaoResource {
                 .header("Generated-Id", String.valueOf(id));
     }
 
-    public <T> Set<Acao> findByObject(T object){
+    @PUT
+    public Response update(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @DELETE
+    Response delete(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    public <T> Set<Acao> findByObject(T object) {
         return queries.findByIdObject((Habilidade) object);
+    }
+
+    public Acao findByObject(Acao acao){
+        return queries.findByIdObject(acao);
     }
 }

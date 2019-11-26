@@ -19,7 +19,7 @@ public class SessionContextProducer implements ContextProducer<Session> {
     @Override
     public Session produce(HttpServerExchange exchange) throws RoutingException {
         val account = (FixedUsernameAndRolesAccount) exchange.getSecurityContext().getAuthenticatedAccount();
-        return new Session( account , jogadorQueries.findByLogin(account.getPrincipal().getName()).getIdJogador());
+        return new Session( account , jogadorQueries.findByLogin(account.getPrincipal().getName()));
     }
 
 }

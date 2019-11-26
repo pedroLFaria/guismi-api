@@ -47,4 +47,10 @@ public class CaminhoResource {
         }
         return caminhos;
     }
+
+    private void insertJunctionTables(Caminho caminho){
+        if(caminho.getEspecializacoes() != null){
+            caminho.getEspecializacoes().forEach(especializacao -> {queries.insertHasEspecializacao(caminho, especializacao);});
+        }
+    }
 }
