@@ -34,5 +34,6 @@ public class AcaoResourceTest {
         var id = Long.parseLong(entityInsert.header("Generated-Id").values().get(0));
         acao.setIdAcao(Long.parseLong(entityInsert.header("Generated-Id").values().get(0)));
         assert acaoResource.findByObject(acao).getNomeAcao().equals("Teste unitário");
+        acaoResource.update(acao, new Session(FixedUsernameAndRolesAccount));
     }
 }

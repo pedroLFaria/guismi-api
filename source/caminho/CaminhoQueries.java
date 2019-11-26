@@ -6,6 +6,7 @@ import habilidade.Habilidade;
 import habito.Habito;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -23,6 +24,10 @@ public interface CaminhoQueries {
     @SqlQuery("select * from caminho")
     Set<Caminho> findByObject();
 
+    @GetGeneratedKeys
+    @SqlUpdate("insert into caminho(NOMECAMINHO, DESCCAMINHO) values (:nomeCaminho,:descCaminho)")
+    Long insert(@BindBean Caminho caminho);
+
     @SqlUpdate("insert into caminho_has_especializacao(IDESPECIALIZACAO, IDCAMINHO) values (:idEspecializacao, :idCaminho)")
     Boolean insertHasEspecializacao(@BindBean Caminho caminho, @BindBean Especializacao especializacao);
 
@@ -33,10 +38,11 @@ public interface CaminhoQueries {
     Boolean insertHasHabito(@BindBean Caminho caminho, @BindBean Habito habito);
 
     default boolean cleanJunctionTables(Caminho caminho){
-        deleteHasEspecializacao(caminho);
-        deleteHasHabilidade(caminho);
-        deleteHashabito(caminho);
-        return true;
+        boolean sucess;
+        sucess = deleteHasEspecializacao(caminho);
+        sucess = deleteHasHabilidade(caminho) && sucess;
+        sucess = deleteHashabito(caminho) && sucess;
+        return sucess;
     }
 
     @SqlUpdate("delete from caminho_has_especializacao where IDCAMINHO = :idCaminho")
