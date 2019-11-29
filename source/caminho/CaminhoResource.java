@@ -6,6 +6,7 @@ import ficha.Ficha;
 import habilidade.HabilidadeResource;
 import habito.HabitoResource;
 import kikaha.urouting.api.*;
+import lombok.var;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -77,17 +78,19 @@ public class CaminhoResource {
         }
     }
 
-    private void insertJunctionTables(Caminho caminho) {
+    private boolean insertJunctionTables(Caminho caminho) {
+        boolean success = true;
         if (caminho.getEspecializacoes() != null) {
-            caminho.getEspecializacoes().forEach(especializacao -> {
-                queries.insertHasEspecializacao(caminho, especializacao);
-            });
-            caminho.getHabilidades().forEach(habilidade -> {
-                queries.insertHasHabilidade(caminho, habilidade);
-            });
-            caminho.getHabitos().forEach(habito -> {
-                queries.insertHasHabito(caminho, habito);
-            });
+            for(var especializacao : caminho.getEspecializacoes()){
+                success = queries.insertHasEspecializacao(caminho, especializacao) && success;
+            }
+            for(var habilidade : caminho.getHabilidades()){
+                success = queries.insertHasHabilidade(caminho, habilidade) && success;
+            }
+            for(var habito : caminho.getHabitos()) {
+                success = queries.insertHasHabito(caminho, habito) && success;
+            }
         }
+        return success;
     }
 }

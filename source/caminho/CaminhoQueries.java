@@ -28,6 +28,12 @@ public interface CaminhoQueries {
     @SqlUpdate("insert into caminho(NOMECAMINHO, DESCCAMINHO) values (:nomeCaminho,:descCaminho)")
     Long insert(@BindBean Caminho caminho);
 
+    @SqlUpdate("update caminho set NOMECAMINHO = :nomeCaminho, DESCCAMINHO = :descCaminho where IDCAMINHO = :idCaminho")
+    Boolean update(@BindBean Caminho caminho);
+
+    @SqlUpdate("delete from caminho where IDCAMINHO = :idCaminho")
+    Boolean delete(@BindBean Caminho caminho);
+
     @SqlUpdate("insert into caminho_has_especializacao(IDESPECIALIZACAO, IDCAMINHO) values (:idEspecializacao, :idCaminho)")
     Boolean insertHasEspecializacao(@BindBean Caminho caminho, @BindBean Especializacao especializacao);
 

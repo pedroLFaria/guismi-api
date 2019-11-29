@@ -17,11 +17,15 @@ public class AcaoResource {
     AcaoQueries queries;
 
     @POST
-    public Response insertNewAcao(Acao acao) {
-        long id = queries.insert(acao);
-        return DefaultResponse
-                .created("api/acao/" + id)
-                .header("Generated-Id", String.valueOf(id));
+    public Response insertNewAcao(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            long id = queries.insert(acao);
+            return DefaultResponse
+                    .created("api/acao/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
     }
 
     @PUT
@@ -34,7 +38,7 @@ public class AcaoResource {
     }
 
     @DELETE
-    Response delete(Acao acao, @Context Session session) {
+    public Response delete(Acao acao, @Context Session session) {
         if (session.getMestre()) {
             return queries.delete(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
