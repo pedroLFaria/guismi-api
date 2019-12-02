@@ -2,10 +2,13 @@ package habito;
 
 import caminho.Caminho;
 import descendencia.Descendencia;
+import especializacao.Especializacao;
 import ficha.Ficha;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import raca.Raca;
 
 import java.util.Set;
@@ -36,4 +39,20 @@ public interface HabitoQueries {
             "right join ficha_has_habito on ficha_has_habito.idficha = ficha.idficha " +
             "right join habito on habito.idhabito = ficha_has_habito.idhabito where ficha.idficha = :idFicha")
     Set<Habito> findByObject(@BindBean Ficha ficha);
+
+    @GetGeneratedKeys
+    @SqlUpdate("insert into habito(NOMEHABITO, DESCHABITO) value (:nomeHabito, :descHabito)")
+    Long insert(@BindBean Habito habito);
+
+    @SqlUpdate("update habito set NOMEHABITO = :nomeHabito, DESCHABITO = :descHabito where IDHABITO = :idHabito")
+    Boolean update(@BindBean Habito habito);
+
+    @SqlUpdate("delete from habito where IDHABITO = :idHabito")
+    Boolean delete(@BindBean Habito habito);
+
+    @SqlUpdate("insert into habito_has_especializacao(IDHABITO, IDESPECIALIZACAO) values (:idHabito, :idEspecializacao)")
+    Boolean insertHasEspecializacao(@BindBean Habito habito, @BindBean Especializacao especializacao);
+
+    @SqlUpdate("delete from habito_has_especializacao where IDHABITO = :idHabito")
+    Boolean deleteHasEspecializacao(@BindBean Habito habito);
 }

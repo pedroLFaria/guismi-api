@@ -1,12 +1,17 @@
 package habilidade;
 
+import acao.Acao;
 import caminho.Caminho;
 import descendencia.Descendencia;
 import ficha.Ficha;
+import gasto.Gasto;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import raca.Raca;
+import situacao.Situacao;
 
 import java.util.Set;
 
@@ -39,4 +44,44 @@ public interface HabilidadeQueries {
             "right join habilidade on ficha_has_habilidade.idhabilidade = habilidade.idhabilidade " +
             "where ficha.idficha =:idFicha")
     Set<Habilidade> findByObject(@BindBean Ficha ficha);
+
+    @GetGeneratedKeys
+    @SqlUpdate("insert into habilidade(NOMEHABILIDADE, ATRATACANTE, TIPOHABILIDADE, UTIHABILIDADE, DESCHABILIDADE, " +
+            "PREREQUISITO, NIVELREQUERIDO) values (:nomeHabilidade, :atrAtacante, :tipoHabilidade, " +
+            ":utiHabilidade, :descHabilidade, :prerequisito, :nivelRequerido)")
+    Long insert(@BindBean Habilidade habilidade);
+
+    @SqlUpdate("update habilidade set NOMEHABILIDADE = :nomeHabilidade, ATRATACANTE = :atrAtacante, " +
+            "TIPOHABILIDADE = :tipoHabilidade, UTIHABILIDADE = :utiHabilidade, DESCHABILIDADE = :descHabilidade, " +
+            "PREREQUISITO = :prerequisito, NIVELREQUERIDO = :nivelRequerido where :idHabilidade")
+    Boolean update(@BindBean Habilidade habilidade);
+
+    @SqlUpdate("delete from habilidade where IDHABILIDADE = :idHabilidade")
+    Boolean delete(@BindBean Habilidade habilidade);
+
+    @SqlUpdate("insert into habilidade_has_acao(IDHABILIDADE, IDACAO) values (:idHabilidade, :idAcao)")
+    Boolean insertHasAcao(@BindBean Habilidade habilidade, @BindBean Acao acao);
+
+    @SqlUpdate("insert into habilidade_has_gasto(IDHABILIDADE, IDGASTO) values (:idHabilidade, :idGasto)")
+    Boolean insertHasGasto(@BindBean Habilidade habilidade, @BindBean Gasto gasto);
+
+    @SqlUpdate("insert into habilidade_has_situacao(IDHABILIDADE, IDSITUACAO) values (:idHabilidade, :idSituacao)")
+    Boolean insertHasSituacao(@BindBean Habilidade habilidade, @BindBean Situacao situacao);
+
+    default boolean cleanJunctionTables(Habilidade habilidade) {
+        boolean success;
+        success = deleteHasAcao(habilidade);
+        success = deleteHasGasto(habilidade) && success;
+        success = deleteHasSituacao(habilidade) && success;
+        return success;
+    }
+
+    @SqlUpdate("delete from habilidade_has_acao where IDHABILIDADE = :idHabilidade")
+    Boolean deleteHasAcao(@BindBean Habilidade habilidade);
+
+    @SqlUpdate("delete from habilidade_has_gasto where IDHABILIDADE = :idHabilidade")
+    Boolean deleteHasGasto(@BindBean Habilidade habilidade);
+
+    @SqlUpdate("delete from habilidade_has_situacao where IDHABILIDADE = :idHabilidade")
+    Boolean deleteHasSituacao(@BindBean Habilidade habilidade);
 }

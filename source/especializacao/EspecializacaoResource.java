@@ -1,11 +1,9 @@
 package especializacao;
 
+import auth.Session;
 import ficha.Ficha;
 import habito.Habito;
-import kikaha.urouting.api.Consumes;
-import kikaha.urouting.api.Mimes;
-import kikaha.urouting.api.Path;
-import kikaha.urouting.api.Produces;
+import kikaha.urouting.api.*;
 import raca.Raca;
 
 import javax.inject.Inject;
@@ -13,7 +11,7 @@ import javax.inject.Singleton;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Path("especializacao/")
+@Path("api/especializacao/")
 @Singleton
 @Produces(Mimes.JSON)
 @Consumes(Mimes.JSON)
@@ -40,5 +38,35 @@ public class EspecializacaoResource {
 
     public Set<Especializacao> findByOject(){
         return queries.findByObject();
+    }
+
+    @POST
+    public Response insert(Especializacao especializacao, @Context Session session){
+        if (session.getMestre()) {
+            long id = queries.insert(especializacao);
+            return DefaultResponse
+                    .created("api/especializacao/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @PUT
+    public Response update(Especializacao especializacao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(especializacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @DELETE
+    public Response delete(Especializacao especializacao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(especializacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
     }
 }

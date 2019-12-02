@@ -2,12 +2,8 @@ package acao;
 
 import auth.Session;
 import habilidade.Habilidade;
-import jogador.Jogador;
-import kikaha.core.modules.security.FixedUsernameAndRolesAccount;
 import kikaha.core.test.KikahaRunner;
-import kikaha.urouting.api.Context;
 import lombok.var;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import util.Utils;

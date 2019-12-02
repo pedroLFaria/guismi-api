@@ -93,7 +93,7 @@ public class FichaResource {
     public Response findByIdJogador(@Context Session session) {
         val ficha = queries.findByIdJogador(session.getIdJogador());
         if (ficha == null) {
-            return DefaultResponse.notFound().entity(ficha);
+            return DefaultResponse.notFound();
         }
         return DefaultResponse.ok((ficha));
     }

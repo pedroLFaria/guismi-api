@@ -59,7 +59,7 @@ public class CaminhoResource {
     }
 
     @PUT
-    Response update(Caminho caminho, @Context Session session){
+    Response update(Caminho caminho, @Context Session session) {
         if (session.getMestre()) {
             return queries.cleanJunctionTables(caminho) && queries.update(caminho)
                     && insertJunctionTables(caminho) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
@@ -69,7 +69,7 @@ public class CaminhoResource {
     }
 
     @DELETE
-    Response delete(Caminho caminho, @Context Session session){
+    Response delete(Caminho caminho, @Context Session session) {
         if (session.getMestre()) {
             return queries.cleanJunctionTables(caminho) && queries.delete(caminho) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
@@ -80,17 +80,15 @@ public class CaminhoResource {
 
     private boolean insertJunctionTables(Caminho caminho) {
         boolean success = true;
-        if (caminho.getEspecializacoes() != null) {
-            for(var especializacao : caminho.getEspecializacoes()){
+        if (caminho.getEspecializacoes() != null)
+            for (var especializacao : caminho.getEspecializacoes())
                 success = queries.insertHasEspecializacao(caminho, especializacao) && success;
-            }
-            for(var habilidade : caminho.getHabilidades()){
+        if (caminho.getHabilidades() != null)
+            for (var habilidade : caminho.getHabilidades())
                 success = queries.insertHasHabilidade(caminho, habilidade) && success;
-            }
-            for(var habito : caminho.getHabitos()) {
+        if (caminho.getHabitos() != null)
+            for (var habito : caminho.getHabitos())
                 success = queries.insertHasHabito(caminho, habito) && success;
-            }
-        }
         return success;
     }
 }

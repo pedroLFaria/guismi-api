@@ -1,10 +1,8 @@
 package idioma;
 
+import auth.Session;
 import ficha.Ficha;
-import kikaha.urouting.api.Consumes;
-import kikaha.urouting.api.Mimes;
-import kikaha.urouting.api.Path;
-import kikaha.urouting.api.Produces;
+import kikaha.urouting.api.*;
 import raca.Raca;
 
 import javax.inject.Inject;
@@ -35,5 +33,35 @@ public class IdiomaResource {
     }
     public Set<Idioma> findByObject(){
         return queries.findByObject();
+    }
+
+    @POST
+    public Response insert(Idioma idioma, @Context Session session){
+        if (session.getMestre()) {
+            long id = queries.insert(idioma);
+            return DefaultResponse
+                    .created("api/idioma/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @PUT
+    public Response update(Idioma idioma, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(idioma) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @DELETE
+    public Response delete(Idioma idioma, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(idioma) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
     }
 }
