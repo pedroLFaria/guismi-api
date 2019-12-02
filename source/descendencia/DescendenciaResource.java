@@ -1,12 +1,10 @@
 package descendencia;
 
+import auth.Session;
 import ficha.Ficha;
 import habilidade.HabilidadeResource;
 import habito.HabitoResource;
-import kikaha.urouting.api.Consumes;
-import kikaha.urouting.api.Mimes;
-import kikaha.urouting.api.Path;
-import kikaha.urouting.api.Produces;
+import kikaha.urouting.api.*;
 import raca.Raca;
 import sanidade.SanidadeResource;
 import situacao.SituacaoResource;
@@ -15,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Set;
 
-@Path("descendencia/")
+@Path("api/descendencia/")
 @Singleton
 @Produces(Mimes.JSON)
 @Consumes(Mimes.JSON)
@@ -58,5 +56,15 @@ public class DescendenciaResource {
             descendencia.setSituacoes(situacaoResource.findByObject(descendencia));
         }
         return descendencias;
+    }
+
+    @POST
+    public Response insert(Descendencia descendencia, @Context Session session){
+        if(session.getMestre()){
+            queries.insert(descendencia);
+            return
+        }else{
+
+        }
     }
 }
