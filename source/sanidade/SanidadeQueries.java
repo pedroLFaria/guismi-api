@@ -3,7 +3,9 @@ package sanidade;
 import ficha.Ficha;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.Set;
 
@@ -18,4 +20,13 @@ public interface SanidadeQueries {
     @SqlQuery("SELECT * FROM SANIDADE")
     Set<Sanidade> findByObject();
 
+    @GetGeneratedKeys
+    @SqlUpdate
+    Long insert(@BindBean Sanidade sanidade);
+
+    @SqlUpdate
+    Boolean update(@BindBean Sanidade sanidade);
+
+    @SqlUpdate
+    Boolean delete(@BindBean Sanidade sanidade);
 }

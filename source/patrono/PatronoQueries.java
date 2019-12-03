@@ -3,7 +3,9 @@ package patrono;
 import ficha.Ficha;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import raca.Raca;
 
 import java.util.Set;
@@ -25,4 +27,14 @@ public interface PatronoQueries {
             "right join patrono on patrono.idpatrono = raca_has_patrono.idpatrono " +
             "where raca.idraca = :idRaca")
     Set<Patrono> findByObject(@BindBean Raca raca);
+
+    @GetGeneratedKeys
+    @SqlUpdate
+    Long insert(@BindBean Patrono patrono);
+
+    @SqlUpdate
+    Boolean update(@BindBean Patrono patrono);
+
+    @SqlUpdate
+    Boolean delete(@BindBean Patrono patrono);
 }

@@ -27,12 +27,12 @@ public interface SituacaoQueries {
     Set<Situacao> findByObject(@BindBean Ficha ficha);
 
     @GetGeneratedKeys
-    @SqlUpdate("insert into situacao (idsituacao, nomesituacao, descsituacao) values(:idSituacao, :nomeSituacao, :descSituacao)")
+    @SqlUpdate()
     Long insert(@BindBean Situacao situacao);
 
-    @SqlUpdate("update situacao set  nomesituacao = :nomeSituacao, descsituacao = :descSituacao where idsituacao = :idSituacao")
+    @SqlUpdate()
     Boolean update(@BindBean Situacao situacao);
 
-    @SqlUpdate("delete situacao where idsituacao = :idSituacao")
-    Boolean delete(@Bind("idSituacao") Long idSituacao);
+    @SqlUpdate()
+    Boolean delete(@BindBean Situacao situacao);
 }

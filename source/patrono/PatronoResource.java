@@ -1,10 +1,8 @@
 package patrono;
 
+import auth.Session;
 import ficha.Ficha;
-import kikaha.urouting.api.Consumes;
-import kikaha.urouting.api.Mimes;
-import kikaha.urouting.api.Path;
-import kikaha.urouting.api.Produces;
+import kikaha.urouting.api.*;
 import raca.Raca;
 
 import javax.inject.Inject;
@@ -34,5 +32,35 @@ public class PatronoResource {
 
     public Set<Patrono> findByObject(){
         return queries.findByObject();
+    }
+
+    @POST
+    public Response insert(Patrono patrono, @Context Session session){
+        if (session.getMestre()) {
+            long id = queries.insert(patrono);
+            return DefaultResponse
+                    .created("api/patrono/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @PUT
+    public Response update(Patrono patrono, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(patrono) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
+    }
+
+    @DELETE
+    public Response delete(Patrono patrono, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(patrono) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.forbiden().entity("UNATHORIZED");
+        }
     }
 }
