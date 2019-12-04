@@ -15,12 +15,12 @@ public interface ReputacaoQueries {
     Set<Reputacao> findByObject();
 
     @GetGeneratedKeys
-    @SqlUpdate
+    @SqlUpdate("insert into reputacao(NOMEREPUTACAO) values(:nomeReputacao)")
     Long insert(@BindBean Reputacao reputacao);
 
-    @SqlUpdate
+    @SqlUpdate("update reputacao set NOMEREPUTACAO = :nomeReputacao where IDREPUTACAO = :idReputacao")
     Boolean update(@BindBean Reputacao reputacao);
 
-    @SqlUpdate
+    @SqlUpdate("delete from reputacao where IDREPUTACAO = :idReputacao")
     Boolean delete(@BindBean Reputacao reputacao);
 }

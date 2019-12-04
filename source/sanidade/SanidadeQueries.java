@@ -21,12 +21,12 @@ public interface SanidadeQueries {
     Set<Sanidade> findByObject();
 
     @GetGeneratedKeys
-    @SqlUpdate
+    @SqlUpdate("insert into sanidade( NOMESANIDADE, DESCSANIDADE) values (:nomeSanidade, :descSanidade)")
     Long insert(@BindBean Sanidade sanidade);
 
-    @SqlUpdate
+    @SqlUpdate("update sanidade set NOMESANIDADE = :nomeSanidade, DESCSANIDADE = :descSanidade where IDSANIDADE = :idSanidade")
     Boolean update(@BindBean Sanidade sanidade);
 
-    @SqlUpdate
+    @SqlUpdate("delete from sanidade where IDSANIDADE = :idSanidade")
     Boolean delete(@BindBean Sanidade sanidade);
 }

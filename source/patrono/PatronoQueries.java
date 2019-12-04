@@ -29,12 +29,13 @@ public interface PatronoQueries {
     Set<Patrono> findByObject(@BindBean Raca raca);
 
     @GetGeneratedKeys
-    @SqlUpdate
+    @SqlUpdate("insert into patrono( NOMEPATRONO, DESCPATRONO) " +
+            "values (:nomePatrono, :descPatrono)")
     Long insert(@BindBean Patrono patrono);
 
-    @SqlUpdate
+    @SqlUpdate("update patrono set NOMEPATRONO = :nomePatrono, DESCPATRONO = :descPatrono where IDPATRONO = :idPatrono")
     Boolean update(@BindBean Patrono patrono);
 
-    @SqlUpdate
+    @SqlUpdate("delete from patrono where IDPATRONO = :idPatrono")
     Boolean delete(@BindBean Patrono patrono);
 }
