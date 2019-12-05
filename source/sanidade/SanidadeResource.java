@@ -33,7 +33,7 @@ public class SanidadeResource {
                     .created("api/sanidade/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -42,7 +42,7 @@ public class SanidadeResource {
         if (session.getMestre()) {
             return queries.update(sanidade) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -51,7 +51,7 @@ public class SanidadeResource {
         if (session.getMestre()) {
             return queries.delete(sanidade) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

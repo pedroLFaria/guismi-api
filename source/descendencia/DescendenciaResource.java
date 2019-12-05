@@ -66,7 +66,7 @@ public class DescendenciaResource {
             insertJunctionTables(descendencia);
             return DefaultResponse.created("api/descendencia/" + id).header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -76,7 +76,7 @@ public class DescendenciaResource {
             return queries.cleanJunctionTables(descendencia) && queries.update(descendencia)
                     && insertJunctionTables(descendencia) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -86,7 +86,7 @@ public class DescendenciaResource {
             return queries.cleanJunctionTables(descendencia) && queries.delete(descendencia) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

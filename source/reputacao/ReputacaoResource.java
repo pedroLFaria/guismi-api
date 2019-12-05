@@ -29,7 +29,7 @@ public class ReputacaoResource {
                     .created("api/reputacao/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -38,7 +38,7 @@ public class ReputacaoResource {
         if (session.getMestre()) {
             return queries.update(reputacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -47,7 +47,7 @@ public class ReputacaoResource {
         if (session.getMestre()) {
             return queries.delete(reputacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

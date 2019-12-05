@@ -72,7 +72,7 @@ public class HabilidadeResource {
             insertJunctionTables(habilidade);
             return DefaultResponse.created("api/habilidade/" + id).header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -82,7 +82,7 @@ public class HabilidadeResource {
             return queries.cleanJunctionTables(habilidade) && queries.update(habilidade)
                     && insertJunctionTables(habilidade) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -92,7 +92,7 @@ public class HabilidadeResource {
             return queries.cleanJunctionTables(habilidade) && queries.delete(habilidade) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

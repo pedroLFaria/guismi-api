@@ -38,7 +38,7 @@ public class InventarioResource {
                     .created("api/inventario/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -47,7 +47,7 @@ public class InventarioResource {
         if (session.getMestre()) {
             return queries.update(inventario) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -56,7 +56,7 @@ public class InventarioResource {
         if (session.getMestre()) {
             return queries.delete(inventario) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

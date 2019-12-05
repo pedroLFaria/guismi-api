@@ -27,7 +27,7 @@ public class SituacaoResource {
                     .created("api/situacao/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -36,7 +36,7 @@ public class SituacaoResource {
         if (session.getMestre()) {
             return queries.update(situacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -45,7 +45,7 @@ public class SituacaoResource {
         if (session.getMestre()) {
             return queries.delete(situacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

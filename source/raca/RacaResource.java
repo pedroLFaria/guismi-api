@@ -72,7 +72,7 @@ public class RacaResource {
             insertJunctionTables(raca);
             return DefaultResponse.created("api/raca/" + id).header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -82,7 +82,7 @@ public class RacaResource {
             return queries.cleanJunctionTables(raca) && queries.update(raca)
                     && insertJunctionTables(raca) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -92,7 +92,7 @@ public class RacaResource {
             return queries.cleanJunctionTables(raca) && queries.delete(raca) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

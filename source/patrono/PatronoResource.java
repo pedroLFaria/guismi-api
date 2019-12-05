@@ -42,7 +42,7 @@ public class PatronoResource {
                     .created("api/patrono/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -51,7 +51,7 @@ public class PatronoResource {
         if (session.getMestre()) {
             return queries.update(patrono) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -60,7 +60,7 @@ public class PatronoResource {
         if (session.getMestre()) {
             return queries.delete(patrono) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

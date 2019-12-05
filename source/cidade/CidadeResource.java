@@ -18,7 +18,7 @@ public class CidadeResource {
                     .created("api/cidade/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -27,7 +27,7 @@ public class CidadeResource {
         if (session.getMestre()) {
             return queries.update(cidade) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -36,7 +36,7 @@ public class CidadeResource {
         if (session.getMestre()) {
             return queries.delete(cidadeo) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

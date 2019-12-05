@@ -24,7 +24,7 @@ public class AcaoResource {
                     .created("api/acao/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -33,7 +33,7 @@ public class AcaoResource {
         if (session.getMestre()) {
             return queries.update(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -42,7 +42,7 @@ public class AcaoResource {
         if (session.getMestre()) {
             return queries.delete(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

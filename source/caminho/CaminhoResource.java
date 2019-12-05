@@ -54,7 +54,7 @@ public class CaminhoResource {
             insertJunctionTables(caminho);
             return DefaultResponse.created("api/caminho/" + id).header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -64,7 +64,7 @@ public class CaminhoResource {
             return queries.cleanJunctionTables(caminho) && queries.update(caminho)
                     && insertJunctionTables(caminho) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -74,7 +74,7 @@ public class CaminhoResource {
             return queries.cleanJunctionTables(caminho) && queries.delete(caminho) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

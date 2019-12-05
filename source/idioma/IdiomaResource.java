@@ -43,7 +43,7 @@ public class IdiomaResource {
                     .created("api/idioma/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -52,7 +52,7 @@ public class IdiomaResource {
         if (session.getMestre()) {
             return queries.update(idioma) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -61,7 +61,7 @@ public class IdiomaResource {
         if (session.getMestre()) {
             return queries.delete(idioma) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

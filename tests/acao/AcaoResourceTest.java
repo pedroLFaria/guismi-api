@@ -46,10 +46,10 @@ public class AcaoResourceTest {
         Session session = Utils.session(false);
         acao.setNomeAcao("Teste unitário");
         var entityInsert = acaoResource.insertNewAcao(acao, session);
-        assert entityInsert.statusCode() == 403;
+        assert entityInsert.statusCode() == 401;
         var entityUpdate = acaoResource.update(acao, session);
-        assert entityUpdate.statusCode() == 403;
+        assert entityUpdate.statusCode() == 401;
         var entityDelete = acaoResource.delete(acao, session);
-        assert entityDelete.statusCode() == 403;
+        assert entityDelete.statusCode() == 401;
     }
 }

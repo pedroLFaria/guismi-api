@@ -55,7 +55,7 @@ public class HabitoResource {
             insertJunctionTables(habito);
             return DefaultResponse.created("api/habilidade/" + id).header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -65,7 +65,7 @@ public class HabitoResource {
             return queries.deleteHasEspecializacao(habito) && queries.update(habito)
                     && insertJunctionTables(habito) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -75,7 +75,7 @@ public class HabitoResource {
             return queries.deleteHasEspecializacao(habito) && queries.delete(habito) ?
                     DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 

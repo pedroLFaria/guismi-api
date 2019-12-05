@@ -48,7 +48,7 @@ public class EspecializacaoResource {
                     .created("api/especializacao/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -57,7 +57,7 @@ public class EspecializacaoResource {
         if (session.getMestre()) {
             return queries.update(especializacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -66,7 +66,7 @@ public class EspecializacaoResource {
         if (session.getMestre()) {
             return queries.delete(especializacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }

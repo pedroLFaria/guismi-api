@@ -28,7 +28,7 @@ public class GastoResource {
                     .created("api/gasto/" + id)
                     .header("Generated-Id", String.valueOf(id));
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -37,7 +37,7 @@ public class GastoResource {
         if (session.getMestre()) {
             return queries.update(gasto) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 
@@ -46,7 +46,7 @@ public class GastoResource {
         if (session.getMestre()) {
             return queries.delete(gasto) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
         } else {
-            return DefaultResponse.forbiden().entity("UNATHORIZED");
+            return DefaultResponse.unauthorized();
         }
     }
 }
