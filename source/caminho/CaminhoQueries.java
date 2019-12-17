@@ -25,10 +25,10 @@ public interface CaminhoQueries {
     Set<Caminho> findByObject();
 
     @GetGeneratedKeys
-    @SqlUpdate("insert into caminho(NOMECAMINHO, DESCCAMINHO) values (:nomeCaminho,:descCaminho)")
+    @SqlUpdate("insert into caminho(NOMECAMINHO, DESCCAMINHO, NIVELCAMINHO) values (:nomeCaminho,:descCaminho, :nivelCaminho)")
     Long insert(@BindBean Caminho caminho);
 
-    @SqlUpdate("update caminho set NOMECAMINHO = :nomeCaminho, DESCCAMINHO = :descCaminho where IDCAMINHO = :idCaminho")
+    @SqlUpdate("update caminho set NOMECAMINHO = :nomeCaminho, DESCCAMINHO = :descCaminho, NIVELCAMINHO = :nivelCaminho where IDCAMINHO = :idCaminho")
     Boolean update(@BindBean Caminho caminho);
 
     @SqlUpdate("delete from caminho where IDCAMINHO = :idCaminho")
