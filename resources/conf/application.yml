@@ -24,8 +24,11 @@ server:
       login-form-enabled: false
       logout-url-enabled: true
       logout-http-method: "POST"
-
-
+    cors:
+      enabled: true
+      always-allow-origin: true
+      always-allow-credentials: true
+      allowed-methods: [ "GET", "PUT", "POST", "DELETE", "PATCH" ]
   db:
     datasources:
       default:
