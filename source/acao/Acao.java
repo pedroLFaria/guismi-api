@@ -12,7 +12,7 @@ public class Acao {
     Long idAcao;
 
     @Column
-    String nomeacao;
+    String nomeAcao;
 
 
 }

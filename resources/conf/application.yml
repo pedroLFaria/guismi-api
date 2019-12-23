@@ -1,5 +1,13 @@
 server:
 
+  aws:
+    default:
+      region: "sa-east-1"
+    credentials-factory: kikaha.cloud.aws.iam.AmazonCredentialsFactory$Yml
+    iam-policy:
+      access-key-id: AKIAZWDNSPUQBY6CY7HF
+      secret-access-key: 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
+
   static: { enabled: true, webjar-enabled: true }
 
   Access-Control-Allow-Credentials: true
@@ -13,12 +21,14 @@ server:
 
   smart-routes:
     auth:
-      enabled: false
+      login-form-enabled: false
+      logout-url-enabled: true
+      logout-http-method: "POST"
     cors:
       enabled: true
       always-allow-origin: true
-      always-allow-credentials: false
-      allowed-methods: [ "*" ]
+      always-allow-credentials: true
+      allowed-methods: [ "GET", "PUT", "POST", "DELETE", "PATCH" ]
 
   db:
     datasources:
@@ -33,27 +43,23 @@ server:
 
   auth:
     session-store: kikaha.core.modules.security.InMemorySessionStore
-
+    
     endpoints:
       permission-denied-page: "/forbidden.html"
       callback-url: "/api/auth/callback"
-      logout-url: "/auth/logout"
-      login-page: "/index.html"
+      logout-url: "/api/auth/logout"
+      login-page: "/"
 
     db-auth:
       select-user-password: "select senha as password  from jogador where login = ?"
       select-user-roles: "select role from jogador where login = ?"
 
-    auth-mechanisms:
-      basic: kikaha.core.modules.security.BasicAuthenticationMechanism
-      form: kikaha.core.modules.security.FormAuthenticationMechanism
-
     rules:
-        - { pattern: "/api/*", auth-mechanisms: [ "form","basic"  ], identity-managers: [ "db-auth" ] }
-        - { pattern: "/*", auth-mechanisms: [ "form" ], identity-managers: [ "db-auth" ] }
-    default-excluded-patterns: [ "/assets/*" ]
+      - { pattern: "/api/*", auth-mechanisms: [ "basic", "json" ], identity-managers: [ "db-auth" ] }
+      - { pattern: "/*", auth-mechanisms: [ "basic", "form" ], identity-managers: [ "db-auth" ] }
+    default-excluded-patterns: [ "/static/*"]
 
   http:
     enabled: true
     host: "0.0.0.0"
-    port: 9000
+    port: 80

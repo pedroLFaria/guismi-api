@@ -1,13 +1,12 @@
 package habito;
 
+import auth.Session;
 import caminho.Caminho;
 import descendencia.Descendencia;
 import especializacao.EspecializacaoResource;
 import ficha.Ficha;
-import kikaha.urouting.api.Consumes;
-import kikaha.urouting.api.Mimes;
-import kikaha.urouting.api.Path;
-import kikaha.urouting.api.Produces;
+import kikaha.urouting.api.*;
+import lombok.var;
 import raca.Raca;
 
 import javax.inject.Inject;
@@ -47,5 +46,44 @@ public class HabitoResource {
             habito.setEspecializacoes(especializacaoResource.findByObject(habito));
         }
         return habitos;
+    }
+
+    @POST
+    public Response insert(Habito habito, @Context Session session) {
+        if (session.getMestre()) {
+            Long id = queries.insert(habito);
+            insertJunctionTables(habito);
+            return DefaultResponse.created("api/habilidade/" + id).header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    @PUT
+    public Response update(Habito habito, @Context Session session){
+        if (session.getMestre()) {
+            return queries.deleteHasEspecializacao(habito) && queries.update(habito)
+                    && insertJunctionTables(habito) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    @DELETE
+    public Response delete(Habito habito, @Context Session session){
+        if (session.getMestre()) {
+            return queries.deleteHasEspecializacao(habito) && queries.delete(habito) ?
+                    DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    private boolean insertJunctionTables(Habito habito){
+        boolean success = true;
+        if(habito.getEspecializacoes() != null)
+            for(var especializacao : habito.getEspecializacoes())
+                success = queries.insertHasEspecializacao(habito, especializacao) && success;
+        return success;
     }
 }

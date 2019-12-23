@@ -1,5 +1,6 @@
 package acao;
 
+import auth.Session;
 import habilidade.Habilidade;
 import kikaha.urouting.api.*;
 
@@ -16,14 +17,40 @@ public class AcaoResource {
     AcaoQueries queries;
 
     @POST
-    public Response insertNewAcao(Acao acao) {
-        long id = queries.insert(acao);
-        return DefaultResponse
-                .created("api/acao/" + id)
-                .header("Generated-Id", String.valueOf(id));
+    public Response insertNewAcao(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            long id = queries.insert(acao);
+            return DefaultResponse
+                    .created("api/acao/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.unauthorized();
+        }
     }
 
-    public <T> Set<Acao> findByObject(T object){
+    @PUT
+    public Response update(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    @DELETE
+    public Response delete(Acao acao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(acao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    public <T> Set<Acao> findByObject(T object) {
         return queries.findByIdObject((Habilidade) object);
+    }
+
+    public Acao findByObject(Acao acao){
+        return queries.findByIdObject(acao);
     }
 }

@@ -32,7 +32,7 @@ public class Raca{
     String longevidadeRaca;
 
     @Column
-    String TRACOSFISIOLOGICOS;
+    String tracosFisiologicos;
 
     @Column
     String culturaRaca;

@@ -1,18 +1,15 @@
 package auth;
 
+import jogador.Jogador;
 import kikaha.core.modules.security.FixedUsernameAndRolesAccount;
 import lombok.Getter;
 
 @Getter
-public class Session {
+public class Session extends Jogador {
 
-    final String username;
-
-    final Long id;
-
-    public Session(FixedUsernameAndRolesAccount account, Long id){
-        this.username = account.getPrincipal().getName();
-        this.id = id;
+    public Session(FixedUsernameAndRolesAccount account,Jogador jogador){
+        this.setNomeJogador(account.getPrincipal().getName());
+        this.setIdJogador(jogador.getIdJogador());
+        this.setMestre(jogador.getMestre());
     }
-
 }

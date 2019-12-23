@@ -1,17 +1,17 @@
-package chat;
+package websockets;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors( chain = true )
-public class ChatMessage {
+public class BatalhaMessage {
 
     String user;
-    Action action;
+    Type type;
     String message;
 
-    public enum Action {
-        SEND, JOINED, LEFT
+    public enum Type {
+        DICE, MESSAGE, FICHA
     }
 }

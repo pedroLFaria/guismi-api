@@ -1,5 +1,6 @@
 package situacao;
 
+import auth.Session;
 import ficha.Ficha;
 import habilidade.Habilidade;
 import kikaha.urouting.api.*;
@@ -19,25 +20,33 @@ public class SituacaoResource {
     SituacaoQueries queries;
 
     @POST
-    public Response insert(Situacao situacao) {
-        long id = queries.insert(situacao);
-        return DefaultResponse
-                .created("api/situacao/" + id)
-                .header("Generated-Id", String.valueOf(id));
+    public Response insert(Situacao situacao, @Context Session session){
+        if (session.getMestre()) {
+            long id = queries.insert(situacao);
+            return DefaultResponse
+                    .created("api/situacao/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.unauthorized();
+        }
     }
 
     @PUT
-    public Response update(Situacao situacao) {
-        queries.insert(situacao);
-        return DefaultResponse
-                .accepted();
+    public Response update(Situacao situacao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(situacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
     }
 
     @DELETE
-    @Path("delete/{id}")
-    public Response delete(@PathParam("id")Long id){
-        queries.delete(id);
-        return DefaultResponse.accepted();
+    public Response delete(Situacao situacao, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(situacao) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
     }
 
     public <T> Set<Situacao> findByObject(T object){

@@ -7,6 +7,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 @JDBI
 public interface JogadorQueries {
 
-    @SqlQuery("select idjogador, nomejogador, mestre from guism.jogador where login = :login")
+    @SqlQuery("select idjogador, nomejogador, mestre from jogador where login = :login")
     Jogador findByLogin(@Bind("login")String login);
 }

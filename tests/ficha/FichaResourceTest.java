@@ -20,10 +20,11 @@ public class FichaResourceTest {
 
     @Test
     public void getFichaByID(){
-        val getResponse = fichaResource.findById(1l);
+        val getResponse = fichaResource.findById(1L);
         val entityFicha = (Ficha) getResponse.entity();
         assert entityFicha != null;
         assert entityFicha.idJogador ==1L;
+        System.out.println(entityFicha);
     }
 
     @Test
@@ -34,7 +35,7 @@ public class FichaResourceTest {
     }
 
     @Test
-    //@Ignore
+    @Ignore
     public void insertFicha(){
         val ficha = fichaQueries.findById(1L);
         ficha.setNomePersonagem("Novo jojo");

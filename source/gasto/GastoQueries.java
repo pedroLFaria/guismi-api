@@ -4,7 +4,9 @@ import habilidade.Habilidade;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.Set;
 
@@ -19,4 +21,13 @@ public interface GastoQueries {
     @SqlQuery("select gasto * where idgasto = :id")
     Gasto findById(@Bind("id")Long id);
 
+    @GetGeneratedKeys
+    @SqlUpdate("insert into gasto(NOME) value (:nome)")
+    Long insert(@BindBean Gasto gasto);
+
+    @SqlUpdate("update gasto set NOME = :nome where IDGASTO = :idGasto")
+    Boolean update(@BindBean Gasto gasto);
+
+    @SqlUpdate("delete from gasto where IDGASTO = :idGasto")
+    Boolean delete(@BindBean Gasto gasto);
 }

@@ -4,7 +4,9 @@ import ficha.Ficha;
 import habito.Habito;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import raca.Raca;
 
 import java.util.Set;
@@ -32,4 +34,14 @@ public interface EspecializacaoQueries {
 
     @SqlQuery("select * from especializacao")
     Set<Especializacao> findByObject();
+
+    @GetGeneratedKeys
+    @SqlUpdate("insert into especializacao(NOMEESPECIALIZACAO, DESCESPECIALIZACAO) values (:nomeEspecializacao, :descEspecializacao)")
+    Long insert(@BindBean Especializacao especializacao);
+
+    @SqlUpdate("update especializacao set NOMEESPECIALIZACAO = :nomeEspecializacao, DESCESPECIALIZACAO = :descEspecializacao where IDESPECIALIZACAO = :idEspecializacao")
+    Boolean update(@BindBean Especializacao especializacao);
+
+    @SqlUpdate("delete from especializacao where IDESPECIALIZACAO = :idEspecializacao")
+    Boolean delete(@BindBean Especializacao especializacao);
 }

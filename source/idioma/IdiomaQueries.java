@@ -3,7 +3,9 @@ package idioma;
 import ficha.Ficha;
 import kikaha.jdbi.JDBI;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import raca.Raca;
 
 import java.util.Set;
@@ -25,4 +27,14 @@ public interface IdiomaQueries {
 
     @SqlQuery("select * from idioma")
     Set<Idioma> findByObject();
+
+    @GetGeneratedKeys
+    @SqlUpdate("insert into idioma(NOMEIDIOMA, DESCIDIOMA) value(:nomeIdioma, :descIdioma)")
+    Long insert(@BindBean Idioma idioma);
+
+    @SqlUpdate("update idioma set NOMEIDIOMA = :nomeIdioma, DESCIDIOMA = :descIdioma where IDIDIOMA =:idIdioma")
+    Boolean update(@BindBean Idioma idioma);
+
+    @SqlUpdate("delete from idioma where IDIDIOMA =:idIdioma")
+    Boolean delete(@BindBean Idioma idioma);
 }

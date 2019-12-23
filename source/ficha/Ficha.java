@@ -2,6 +2,7 @@ package ficha;
 
 import caminho.Caminho;
 import descendencia.Descendencia;
+import especializacao.Especializacao;
 import habilidade.Habilidade;
 import habito.Habito;
 import idioma.Idioma;
@@ -12,6 +13,7 @@ import kikaha.jdbi.serializers.Optional;
 import lombok.Data;
 import patrono.Patrono;
 import raca.Raca;
+import sanidade.Sanidade;
 import situacao.Situacao;
 
 import java.util.Set;
@@ -113,6 +115,8 @@ public class Ficha {
 
     Raca raca;
 
+    Sanidade sanidade;
+
     Set<Caminho> caminhos;
 
     Set<Descendencia> descendencias;
@@ -128,5 +132,7 @@ public class Ficha {
     Set<Patrono> patronos;
 
     Set<Situacao> situacoes;
+
+    Set<Especializacao> especializacoes;
 }
 

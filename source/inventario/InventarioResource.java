@@ -1,8 +1,9 @@
 package inventario;
 
+import auth.Session;
 import ficha.Ficha;
 import item.ItemResource;
-import kikaha.urouting.api.Path;
+import kikaha.urouting.api.*;
 import lombok.val;
 
 import javax.inject.Inject;
@@ -28,4 +29,34 @@ public class InventarioResource {
                 inventario.setItems(itemResource.findByObject(inventario));
         return inventarios;
    }
+
+    @POST
+    public Response insert(Inventario inventario, @Context Session session){
+        if (session.getMestre()) {
+            long id = queries.insert(inventario);
+            return DefaultResponse
+                    .created("api/inventario/" + id)
+                    .header("Generated-Id", String.valueOf(id));
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    @PUT
+    public Response update(Inventario inventario, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.update(inventario) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
+
+    @DELETE
+    public Response delete(Inventario inventario, @Context Session session) {
+        if (session.getMestre()) {
+            return queries.delete(inventario) ? DefaultResponse.accepted() : DefaultResponse.badRequest();
+        } else {
+            return DefaultResponse.unauthorized();
+        }
+    }
 }
