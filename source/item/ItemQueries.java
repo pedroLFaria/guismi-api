@@ -12,10 +12,10 @@ import java.util.Set;
 @JDBI
 public interface ItemQueries {
 
-    @SqlQuery("SELECT * FROM ITEM")
+    @SqlQuery("SELECT * FROM item")
     Set<Item> findByObject();
 
-    @SqlQuery("SELECT ITEM.*,INVENTARIO_HAS_ITEM.QTDINVENTARIOITEM FROM inventario " +
+    @SqlQuery("SELECT item.*,inventario_has_item.QTDINVENTARIOITEM FROM inventario " +
             "left join inventario_has_item on inventario_has_item.IDINVENTARIO " +
             "left join item on item.IDITEM = inventario_has_item.IDITEM where inventario.IDINVENTARIO = :idInventario")
     Set<Item> findByObject(@BindBean Inventario inventario);

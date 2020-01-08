@@ -2,6 +2,7 @@ package item;
 
 import kikaha.jdbi.serializers.Column;
 import kikaha.jdbi.serializers.Entity;
+import kikaha.jdbi.serializers.Optional;
 import lombok.Data;
 
 @Data
@@ -32,4 +33,7 @@ public class    Item {
     @Column
     String iconeItem;
 
+    @Column
+    @Optional
+    Long qtdInventarioItem;
 }
