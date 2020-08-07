@@ -5,8 +5,8 @@ server:
       region: "sa-east-1"
     credentials-factory: kikaha.cloud.aws.iam.AmazonCredentialsFactory$Yml
     iam-policy:
-      access-key-id: AKIAZWDNSPUQBY6CY7HF
-      secret-access-key: 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
+      access-key-id: *****ACESSKEY*****
+      secret-access-key: *****SECRETKEY*****
 
   static: { enabled: true, webjar-enabled: true }
 
@@ -35,7 +35,7 @@ server:
       default:
         jdbc-url: "jdbc:mysql://guismi.ctebgduzcfr5.sa-east-1.rds.amazonaws.com/guism?serverTimezone=UTC"
         username: "guismiADM"
-        password: "karen#GOD"
+        password: "*****"
         useSSL: "true"
         verifyServerCertificate: "true"
         requireSSL: "false"
