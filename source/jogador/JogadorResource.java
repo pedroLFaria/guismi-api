@@ -18,4 +18,10 @@ public class JogadorResource {
     public Response isMestre(@Context Session session){
         return session.getMestre() ? DefaultResponse.noContent() : DefaultResponse.unauthorized();
     }
+
+    @GET
+    @Path("XUXA")
+    public Response xuxa(){
+        return DefaultResponse.ok("xuxa");
+    }
 }
