@@ -16,6 +16,6 @@ public class JogadorResource {
     @GET
     @Path("mestre")
     public Response isMestre(@Context Session session){
-        return session.getMestre() ? DefaultResponse.noContent() : DefaultResponse.unauthorized();
+        return session.getMestre() ? DefaultResponse.noContent() : DefaultResponse.unauthorized();//xuxa
     }
 }
