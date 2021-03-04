@@ -37,8 +37,6 @@ public class BatalhaRoomResource {
                 .tableName("chat-quadro-de-batalha")
                 .item(message.parseToDynamo())
                 .build();
-
-        System.out.println(GetItemRequest.builder().key().tableName().projectionExpression());
         try {
             dynamoDbClient.putItem(request);
         } catch (ResourceNotFoundException e) {
