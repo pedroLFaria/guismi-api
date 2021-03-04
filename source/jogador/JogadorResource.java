@@ -18,4 +18,10 @@ public class JogadorResource {
     public Response isMestre(@Context Session session){
         return session.getMestre() ? DefaultResponse.noContent() : DefaultResponse.unauthorized();
     }
+
+    @GET
+    @Path("Jogador/{login}")
+    public Response isJogador(@Context Session session, @PathParam("login") String login){
+        return DefaultResponse.ok(queries.findByLogin(login));
+    }
 }
